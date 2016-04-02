@@ -1,2 +1,2 @@
 // MAIN CONTROLLER
-function mainController($scope, $http, hangService) {}
+function mainController($scope, $http, $location, hangService) {}
