@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <h1 class="text-center">Hangman
+        <small>A wild game</small>
+    </h1>
+    <hr/>
+    <div class="col-md-8 col-md-offset-2">
+        <form ng-submit="send()" class="form-inline text-center">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <select class="btn btn-info btn-lg" ng-model='option'>
+                        <option value='readme' selected>Lisez-moi</option>
+                        <option value='init'>Initialiser</option>
+                        <option value='initLength'>Initialiser d'une longueur de
+                        </option>
+                        <option value='status'>Status</option>
+                        <option value='guessLetter'>Poster une lettre</option>
+                        <option value='guessWord'>Poster un mot</option>
+                    </select>
+                </span>
+                <input type="text" class="form-control input-lg" style='height:48px;' placeholder="..." ng-model='command'/>
+                <span class='input-group-btn' ng-click='send()'>
+                    <button type="button" class="btn btn-info btn-lg">
+                        <span class='glyphicon glyphicon-ok'></span>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <hr/>
+        <textarea disabled ng-model='result' class="form-control" style='min-height:250px; height:auto'>
+
+        </textarea>
+    </div>
+</div>
