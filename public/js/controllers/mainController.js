@@ -4,7 +4,7 @@ function mainController($scope, $http, hangService, hangFactory) {
     $scope.option = 'readme';
 
     $scope.send = function() {
-
+        alert('send pressed');
         switch ($scope.option) {
 
             case 'readme':
