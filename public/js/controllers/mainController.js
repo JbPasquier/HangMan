@@ -3,8 +3,57 @@ function mainController($scope, $http, hangService, hangFactory) {
 
     $scope.option = 'readme';
 
+    $scope.focusCommand = function() {
+
+        $scope.command = '';
+        angular.element('[ng-model="command"]').focus();
+
+    };
+
     $scope.send = function() {
-        alert('send pressed');
+
+        if ($scope.command) {
+
+            if (['readme', 'init', 'initLength', 'status', 'guessLetter', 'guessWord'].indexOf($scope.command) !== -1) {
+
+                $scope.option = $scope.command;
+                $scope.focusCommand();
+
+                if ($scope.option !== 'initLength')
+                    $scope.action();
+
+                return;
+
+            } else if ($scope.option === 'initLength' && !isNaN(Number($scope.command))) {
+
+                $scope.action();
+
+                return;
+
+            } else if ($scope.command.length === 1) {
+
+                $scope.option = 'guessLetter';
+                $scope.action();
+
+                return;
+
+            } else {
+
+                $scope.option = 'guessWord';
+                $scope.action();
+
+                return;
+
+            }
+
+        } else {
+            $scope.action();
+            return;
+        }
+
+    };
+
+    $scope.action = function() {
         switch ($scope.option) {
 
             case 'readme':
@@ -22,6 +71,7 @@ function mainController($scope, $http, hangService, hangFactory) {
 
                     $scope.option = 'status';
                     $scope.send();
+
 
                 });
                 break;
@@ -117,7 +167,7 @@ function mainController($scope, $http, hangService, hangFactory) {
 
         }
 
-        $scope.command = '';
+        $scope.focusCommand();
 
     };
     $scope.send();

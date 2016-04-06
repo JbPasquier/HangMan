@@ -17,13 +17,16 @@ var Hang = {
 
         res.send({
             message: 'Welcome to the Hangman' + "\n" +
-                '# METHODS' + "\n" + 'GET /hangman' + "\t" + 'This readme' + "\n" +
-                'GET /hangman/new' + "\t" + 'Launch a new game, return your gameid' + "\n" +
-                'GET /hangman/new/n' + "\t" + 'Launch a new game, with a word of n letters, return your gameid' + "\n" +
-                'GET /hangman/gameid' + "\t" + 'Show your status' + "\n" +
-                'POST /hangman/gameid' + "\t" + 'Try a {guess:"word"}' + "\n" +
-                'PUT /hangman/gameid' + "\t" + 'Try to {guess:"a"} letter'
+                'Command can be a letter, a word, or any of these verbs' + "\n" +
+                '# METHODS' + "\n" +
+                'readme' + "\t" + 'GET /hangman' + "\t" + 'This readme' + "\n" +
+                'init' + "\t" + 'GET /hangman/new' + "\t" + 'Launch a new game, return your gameid' + "\n" +
+                'initLength' + "\t" + 'GET /hangman/new/n' + "\t" + 'Launch a new game, with a word of n letters, return your gameid' + "\n" +
+                'status' + "\t" + 'GET /hangman/gameid' + "\t" + 'Show your status' + "\n" +
+                'guessWord' + "\t" + 'POST /hangman/gameid' + "\t" + 'Try a {guess:"word"}' + "\n" +
+                'guessLetter' + "\t" + 'PUT /hangman/gameid' + "\t" + 'Try to {guess:"a"} letter'
         });
+        return;
 
     },
 
@@ -41,12 +44,14 @@ var Hang = {
                 res.send({
                     message: 'Word is too short'
                 });
+                return;
             }
 
             if (req.params.num > 15) {
                 res.send({
                     message: 'Word is too long'
                 });
+                return;
             }
 
             while (word.length != req.params.num) {
@@ -71,7 +76,10 @@ var Hang = {
                 chars: []
             }, function(err, data) {
 
-                res.send(data._id);
+                res.send({
+                    message: data._id
+                });
+                return;
 
             });
 
@@ -89,12 +97,14 @@ var Hang = {
                 res.send({
                     message: 'Now : ' + data.found + "\n" + 'You did ' + data.err + '/11 err.' + "\n" + 'You played : ' + data.chars.join(', ')
                 });
+                return;
 
             } else {
 
                 res.send({
                     message: 'You lose' + "\n" + 'Now : ' + data.found + "\n" + 'You did ' + data.err + '/11 err.' + "\n" + 'You played : ' + data.chars.join(', ') + "\n" + 'Word was ' + data.word
                 });
+                return;
 
             }
 
@@ -115,24 +125,28 @@ var Hang = {
                 res.send({
                     message: 'You already found that word.' + "\n" + 'Word was ' + data.word
                 });
+                return;
             }
 
             if (data.err >= 11) {
                 res.send({
                     message: 'You have too much errors on this hangman.' + "\n" + 'Word was ' + data.word
                 });
+                return;
             }
 
             if (guess.length !== 1) {
                 res.send({
                     message: 'Please send only one char'
                 });
+                return;
             }
 
             if (data.chars.indexOf(guess) !== -1) {
                 res.send({
                     message: 'You already send this char'
                 });
+                return;
             }
 
             regex = new RegExp(guess, 'g');
@@ -175,6 +189,7 @@ var Hang = {
                 res.send({
                     message: sendMe
                 });
+                return;
             });
         });
     },
@@ -221,6 +236,7 @@ var Hang = {
                 res.send({
                     message: sendMe
                 });
+                return;
             });
 
         });
