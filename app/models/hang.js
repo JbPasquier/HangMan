@@ -22,9 +22,11 @@ var Hang = {
                 'readme' + "\t" + 'GET /hangman' + "\t" + 'This readme' + "\n" +
                 'init' + "\t" + 'GET /hangman/new' + "\t" + 'Launch a new game, return your gameid' + "\n" +
                 'initLength' + "\t" + 'GET /hangman/new/n' + "\t" + 'Launch a new game, with a word of n letters, return your gameid' + "\n" +
+                'initWithWord' + "\t" + 'GET /hangman/word/w' + "\t" + 'Launch a new game, with the word w, return your gameid' + "\n" +
                 'status' + "\t" + 'GET /hangman/gameid' + "\t" + 'Show your status' + "\n" +
                 'guessWord' + "\t" + 'POST /hangman/gameid' + "\t" + 'Try a {guess:"word"}' + "\n" +
-                'guessLetter' + "\t" + 'PUT /hangman/gameid' + "\t" + 'Try to {guess:"a"} letter'
+                'guessLetter' + "\t" + 'PUT /hangman/gameid' + "\t" + 'Try to {guess:"a"} letter' + "\n" +
+                'clear' + "\t" + 'Reset current game / start a new'
         });
         return;
 
@@ -34,7 +36,11 @@ var Hang = {
 
         var word = '';
 
-        if (!req.params.num) {
+        if(req.params.word) {
+
+            word = req.params.word.replace(/[^A-Z]+/gi,'');
+
+        } else if (!req.params.num) {
 
             word = randomWord();
 

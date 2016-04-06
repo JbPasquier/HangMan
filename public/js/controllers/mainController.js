@@ -14,12 +14,12 @@ function mainController($scope, $http, hangService, hangFactory) {
 
         if ($scope.command) {
 
-            if (['readme', 'init', 'initLength', 'status', 'guessLetter', 'guessWord'].indexOf($scope.command) !== -1) {
+            if (['readme', 'init', 'initLength', 'status', 'guessLetter', 'guessWord', 'initWithWord', 'clear'].indexOf($scope.command) !== -1) {
 
                 $scope.option = $scope.command;
                 $scope.focusCommand();
 
-                if ($scope.option !== 'initLength')
+                if ($scope.option !== 'initLength' && $scope.option !== 'initWithWord')
                     $scope.action();
 
                 return;
@@ -30,11 +30,24 @@ function mainController($scope, $http, hangService, hangFactory) {
 
                 return;
 
-            } else if ($scope.command.length === 1) {
+            } else if ($scope.option === 'initWithWord') {
+
+                $scope.action();
+
+                return;
+
+            } else if ($scope.command.length === 1 && hangFactory.currentHangmanId !== false) {
 
                 $scope.option = 'guessLetter';
                 $scope.action();
 
+                return;
+
+            }
+            if (hangFactory.currentHangmanId === false) {
+
+                $scope.option = 'initWithWord';
+                $scope.action();
                 return;
 
             } else {
@@ -56,6 +69,19 @@ function mainController($scope, $http, hangService, hangFactory) {
     $scope.action = function() {
         switch ($scope.option) {
 
+            case 'initWithWord':
+                hangService.initWithWord($scope.command).then(function(res) {
+
+                    hangFactory.currentHangmanId = res.data.message;
+
+                    $scope.result = 'Jeu initialisé';
+
+                    $scope.option = 'status';
+                    $scope.send();
+
+                });
+                break;
+
             case 'readme':
                 hangService.readme().then(function(res) {
                     $scope.result = res.data.message;
@@ -71,7 +97,6 @@ function mainController($scope, $http, hangService, hangFactory) {
 
                     $scope.option = 'status';
                     $scope.send();
-
 
                 });
                 break;
@@ -163,6 +188,17 @@ function mainController($scope, $http, hangService, hangFactory) {
                     });
 
                 }
+                break;
+
+            case 'clear':
+
+                hangFactory.currentHangmanId = false;
+
+                $scope.result = 'Jeu réinitialisé';
+
+                $scope.option = 'readme';
+                $scope.send();
+
                 break;
 
         }
