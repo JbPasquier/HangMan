@@ -36,9 +36,9 @@ var Hang = {
 
         var word = '';
 
-        if(req.params.word) {
+        if (req.params.word) {
 
-            word = req.params.word.replace(/[^A-Z]+/gi,'');
+            word = req.params.word.replace(/[^A-Z]+/gi, '');
 
         } else if (!req.params.num) {
 
@@ -120,7 +120,7 @@ var Hang = {
 
     sendChar: function(req, res) {
 
-        var guess = req.body.guess,
+        var guess = req.body.guess.replace(/[^A-Z]+/gi, ''),
             newData, sendMe;
 
         Hang.model.findOne({
@@ -191,6 +191,13 @@ var Hang = {
 
 
             }
+
+            if (data.word === data.found) {
+
+                sendMe = 'Well done !' + "\n" + 'The word was ' + data.word + "\n" + 'You did it with ' + data.err + ' err.';
+
+            }
+
             Hang.model.findByIdAndUpdate(req.params.id, newData, function() {
                 res.send({
                     message: sendMe
@@ -208,7 +215,7 @@ var Hang = {
             _id: req.params.id
         }, function(err, data) {
 
-            if (data.word == req.body.guess) {
+            if (data.word == req.body.guess.replace(/[^A-Z]+/gi, '')) {
 
                 data.found = data.word;
 

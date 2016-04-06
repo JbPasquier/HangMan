@@ -137,9 +137,6 @@ function mainController($scope, $http, hangService, hangFactory) {
                     $scope.option = 'init';
                     $scope.send();
 
-                    $scope.option = 'status';
-                    $scope.send();
-
                 } else {
 
                     hangService.getStatus().then(function(res) {
@@ -159,9 +156,6 @@ function mainController($scope, $http, hangService, hangFactory) {
                     $scope.option = 'init';
                     $scope.send();
 
-                    $scope.option = 'status';
-                    $scope.send();
-
                 } else {
 
                     hangService.guessLetter($scope.command).then(function(res) {
@@ -176,9 +170,6 @@ function mainController($scope, $http, hangService, hangFactory) {
                 if (hangFactory.currentHangmanId === false) {
 
                     $scope.option = 'init';
-                    $scope.send();
-
-                    $scope.option = 'status';
                     $scope.send();
 
                 } else {
