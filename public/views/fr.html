@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <h1 class="text-center">Hangman
-        <small>A wild game</small>
+    <h1 class="text-center">Le Pendu
+        <small>Un jeu wild</small>
     </h1>
     <center><a href='#/fr'>fr</a> | <a href='/'>en</a></center>
     <hr/>
@@ -9,19 +9,19 @@
             <div class="input-group">
                 <span class="input-group-btn">
                     <select class="btn btn-info btn-lg" ng-model='option' ng-change="focusCommand()">
-                        <option value='readme' selected>Readme</option>
-                        <option value='init'>Initialize</option>
-                        <option value='initLength'>Initialize with a length of
+                        <option value='lisezmoi' selected>Lisez-moi</option>
+                        <option value='init'>Initialiser</option>
+                        <option value='initLong'>Initialiser avec un mot d'une longueur de
                         </option>
-                        <option value='initWithWord'>Initialize with the word
+                        <option value='initMot'>Initialiser avec le mot
                         </option>
-                        <option value='status'>Status</option>
-                        <option value='guessLetter'>Post a letter</option>
-                        <option value='guessWord'>Post a word</option>
-                        <option value='clear'>Reset</option>
+                        <option value='statut'>Statut</option>
+                        <option value='devinerLettre'>Envoyer une lettre</option>
+                        <option value='devinerMot'>Envoyer un mot</option>
+                        <option value='eponger'>Annuler la partie</option>
                     </select>
                 </span>
-                <input type="text" class="form-control input-lg" style='height:48px;' placeholder="Command..." ng-model='command'/>
+                <input type="text" class="form-control input-lg" style='height:48px;' placeholder="Commande..." ng-model='command'/>
                 <span class='input-group-btn' ng-click='send()'>
                     <button type="button" class="btn btn-info btn-lg">
                         <span class='glyphicon glyphicon-ok'></span>
